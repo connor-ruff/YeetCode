@@ -6,24 +6,45 @@
 #include<vector>
 
 
-int main(int argc, char ** argv){
+class Solution {
 
-	vector<int> num1 = {1, 4, 7};
-	vector<int> num2 = {3, 5, 8};
+	public:
 
-	int j = 0;
-	for (auto it = num1.begin(); it != num1.end(); ++it){
-		if (num2.at(j) <= *it){
-			num1.insert(it, num2.at(j));
-			j++;
+	void merge(std::vector<int>& nums1, int m, std::vector<int>& nums2, int n) {
+
+		int j = 0;
+		for (int i = 0; ((i < nums1.size()) && (j < nums2.size())); ++i){
+
+			if ( nums2.at(j) < nums1.at(i) ) {
+				nums1.insert(nums1.begin() + i, nums2.at(j));
+				j++;
+			}
 		}
+
+		if(j == n) {j--;}
+		if (nums2.at(j) > *(nums1.end()-1)){
+			for (j; j < nums2.size(); ++j){
+				nums1.insert(nums1.end(), nums2.at(j));
+			}
+		} 
+			
+		return; 
+	}
+};	
+
+int main(){
+
+	std::vector<int> nums1{1, 5, 8, 10, 12};
+	std::vector<int> nums2{2, 3, 6, 9, 11, 13, 15, 19};
+
+	Solution s;
+	s.merge(nums1, nums1.size(), nums2, nums2.size());
+
+	for ( auto it = nums1.begin(); it != nums1.end(); ++it){
+		std::cout << *it << "  " ;
 	}
 
-
-	for (auto jt = num1.begin(); jt != num2.end(); ++jt){
-		std::cout << *jt << "  " ;
-	}
+	std::endl;
 	return 0;
-
 }
 
